@@ -1,0 +1,6 @@
+payone_mode: 'Modus'
+payone_payment_type: 'Typ'
+payone_merchant_id: 'Merchant ID'
+payone_portal_id: 'Portal ID'
+payone_account_id: 'Account ID'
+payone_key: 'Key'

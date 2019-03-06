@@ -1,0 +1,16 @@
+services:
+    CoreShop\Payum\PayoneBundle\Form\Payment\PayoneType:
+        tags:
+            - { name: coreshop.gateway_configuration_type, type: payone }
+            - { name: form.type }
+
+    payum.payone_gateway_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [CoreShop\Payum\Payone\PayoneGatewayFactory]
+        tags:
+            - {name: payum.gateway_factory_builder, factory: payone }
+
+    CoreShop\Payum\PayoneBundle\Extension\PopulatePayoneExtension:
+        autowire: true
+        tags:
+            - { name: payum.extension, alias: payone_populate, factory: payone, gateway: payone, prepend: false }
