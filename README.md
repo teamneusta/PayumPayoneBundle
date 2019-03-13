@@ -21,3 +21,6 @@ Enable the Bundle in Pimcore Extension Manager
 #### 3. Setup
 Go to Coreshop -> PaymentProvider and add a new Provider. Choose `payone` from `type` and fill out the required fields.
 
+### Setup in Payone Portal
+
+Use this as Notification URL: `/payment/notify/custom/payone`
