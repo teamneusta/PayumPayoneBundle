@@ -117,6 +117,9 @@ final class PopulatePayoneExtension implements ExtensionInterface
         $result['customer'] = array_merge($result['customer'] ?? [], $customerData);
         $result['bankAccount'] = array_merge($result['bankAccount'] ?? [], $bankAccountData);
         $result['language'] = $order->getLocaleCode();
+        
+        $result['reference'] = $order->getOrderNumber();
+        $result['narrative_text'] = $order->getOrderNumber();
 
         $request->setResult((array)$result);
     }
