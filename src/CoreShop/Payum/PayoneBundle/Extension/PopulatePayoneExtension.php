@@ -8,7 +8,7 @@
  *
  * @copyright  Copyright (c) 2015-2017 Dominik Pfaffenbauer (https://www.pfaffenbauer.at)
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
-*/
+ */
 
 namespace CoreShop\Payum\PayoneBundle\Extension;
 
@@ -117,6 +117,10 @@ final class PopulatePayoneExtension implements ExtensionInterface
         $result['customer'] = array_merge($result['customer'] ?? [], $customerData);
         $result['bankAccount'] = array_merge($result['bankAccount'] ?? [], $bankAccountData);
         $result['language'] = $order->getLocaleCode();
+
+        $result['reference'] = $order->getOrderNumber();
+        $result['narrative_text'] = $order->getOrderNumber();
+        $result['transaction_param'] = $order->getOrderNumber();
 
         $request->setResult((array)$result);
     }
