@@ -11,6 +11,7 @@ services:
             - {name: payum.gateway_factory_builder, factory: payone }
 
     CoreShop\Payum\PayoneBundle\Extension\PopulatePayoneExtension:
+        public: true
         autowire: true
         tags:
             - { name: payum.extension, alias: payone_populate, factory: payone, gateway: payone, prepend: false }
