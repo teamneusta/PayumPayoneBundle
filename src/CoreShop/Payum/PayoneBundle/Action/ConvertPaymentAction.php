@@ -10,20 +10,21 @@
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
  */
 
-namespace CoreShop\Payum\PayoneBundle;
+namespace CoreShop\Payum\PayoneBundle\Action;
 
-use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
-use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
+use CoreShop\Component\Payment\Model\PaymentInterface;
+use Payum\Core\Request\Convert;
 
-class PayoneBundle extends AbstractPimcoreBundle
+class ConvertPaymentAction extends \CoreShop\Payum\Payone\Action\ConvertPaymentAction
 {
-    use PackageVersionTrait;
-
     /**
      * {@inheritDoc}
      */
-    protected function getComposerPackageName(): string
+    public function supports($request)
     {
-        return 'teamneusta/payum-payone-bundle';
+        return
+            $request instanceof Convert &&
+            $request->getSource() instanceof PaymentInterface &&
+            'array' === $request->getTo();
     }
 }

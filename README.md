@@ -4,9 +4,9 @@ It requires the [coreshop/payum-payone](https://github.com/coreshop/payum-payone
 
 ## Notice
 The Payone Payum Implementation currently only supports following gateways:
- - PayPal
- - Klarna Sofort
- - Credit Card
+- PayPal
+- Klarna Sofort
+- Credit Card
 
 ## Installation
 

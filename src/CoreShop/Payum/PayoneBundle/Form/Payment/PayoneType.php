@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * CoreShop.
  *
@@ -32,12 +32,12 @@ final class PayoneType extends AbstractType
                     PaymentTypes::PAYONE_CREDIT_CARD,
                     PaymentTypes::PAYONE_SOFORT,
                     PaymentTypes::PAYONE_PAY_PAL,
-                ]
+                ],
             ])
             ->add('mode', ChoiceType::class, [
                 'choices' => [
-                    'live', 'test'
-                ]
+                    'live', 'test',
+                ],
             ])
             ->add('merchantId', TextType::class, [
                 'constraints' => [
@@ -58,14 +58,14 @@ final class PayoneType extends AbstractType
                     new NotBlank([
                         'groups' => 'coreshop',
                     ]),
-                ]
+                ],
             ])
             ->add('key', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'groups' => 'coreshop',
                     ]),
-                ]
+                ],
             ]);
     }
 }

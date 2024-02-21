@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * CoreShop.
  *
@@ -8,7 +8,7 @@
  *
  * @copyright  Copyright (c) 2015-2020 Dominik Pfaffenbauer (https://www.pfaffenbauer.at)
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
-*/
+ */
 
 namespace CoreShop\Payum\PayoneBundle\Controller;
 

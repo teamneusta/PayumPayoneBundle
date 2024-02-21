@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * CoreShop.
  *
@@ -16,18 +16,19 @@ use CoreShop\Component\Address\Model\AddressInterface;
 use CoreShop\Component\Core\Model\CustomerInterface;
 use CoreShop\Component\Core\Model\OrderItemInterface;
 use CoreShop\Component\Order\Model\OrderInterface;
-use CoreShop\Component\Order\Repository\OrderRepositoryInterface;
-use CoreShop\Component\Core\Model\PaymentInterface;
+use CoreShop\Component\Payment\Model\PaymentInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Extension\Context;
 use Payum\Core\Extension\ExtensionInterface;
 use Payum\Core\Request\Convert;
+use Pimcore\Model\DataObject\CoreShopOrder;
 
 final class PopulatePayoneExtension implements ExtensionInterface
 {
-    /**
-     * @param Context $context
-     */
+    public function __construct(private int $decimalFactor)
+    {
+    }
+
     public function onPostExecute(Context $context)
     {
         $action = $context->getAction();
@@ -49,26 +50,33 @@ final class PopulatePayoneExtension implements ExtensionInterface
 
         /** @var PaymentInterface $payment */
         $payment = $request->getSource();
+        $paymentNumber = explode('_', $payment->getNumber());
+        $orderNumber = reset($paymentNumber);
         if (false === $payment instanceof PaymentInterface) {
             return;
         }
 
         /** @var OrderInterface $order */
-        $order = $payment->getOrder();
+        $order = CoreShopOrder::getByOrderNumber($orderNumber, 1);
 
         /**
          * @var CustomerInterface $customer
-         * @var AddressInterface $address
+         * @var AddressInterface  $address
          */
         $customer = $order->getCustomer();
         $address = $order->getShippingAddress();
 
         $customerData = [
+            'title' => '',
             'salutation' => $customer->getSalutation(),
             'firstname' => $customer->getFirstname(),
             'lastname' => $customer->getLastname(),
             'email' => $customer->getEmail(),
-            'language' => $customer->getLocaleCode()
+            'language' => $customer->getLocaleCode(),
+            'birthday' => '',
+            'gender' => '',
+            'ip' => '',
+            'telephonenumber' => '',
         ];
 
         $addressData = [
@@ -78,21 +86,22 @@ final class PopulatePayoneExtension implements ExtensionInterface
             'lastname' => $address->getLastname(),
             'street' => $address->getStreet(),
             'houseNumber' => $address->getNumber(),
-            'country' => $address->getCountry()->getIsoCode()
+            'addressaddition' => '',
+            'country' => $address->getCountry()->getIsoCode(),
         ];
 
         $bankAccountData = [
-            'country' => $order->getInvoiceAddress()->getCountry()->getIsoCode()
+            'country' => $order->getInvoiceAddress()->getCountry()->getIsoCode(),
         ];
 
         $orderData = [
-            'amount' => $order->getTotal(true),
-            'currency' => $order->getCurrency()->getIsoCode()
+            'amount' => (int) round($order->getTotal(true) / ($this->decimalFactor / 100), 0),
+            'currency' => $order->getCurrency()->getIsoCode(),
         ];
 
         $basketData = [
-            'basketAmount' => $order->getTotal(true),
-            'currency' => $order->getCurrency()->getIsoCode()
+            'basketAmount' => (int) round($order->getTotal(true) / ($this->decimalFactor / 100), 0),
+            'currency' => $order->getCurrency()->getIsoCode(),
         ];
         $basketItems = [];
 
@@ -104,7 +113,7 @@ final class PopulatePayoneExtension implements ExtensionInterface
                 'name' => $orderItem->getName(),
                 'quantity' => $orderItem->getQuantity(),
                 'itemId' => $orderItem->getId(),
-                'price' => $orderItem->getTotal()
+                'price' => $orderItem->getTotal(),
             ];
         }
 
@@ -122,7 +131,7 @@ final class PopulatePayoneExtension implements ExtensionInterface
         $result['narrative_text'] = $order->getOrderNumber();
         $result['transaction_param'] = $order->getOrderNumber();
 
-        $request->setResult((array)$result);
+        $request->setResult((array) $result);
     }
 
     /**
@@ -130,7 +139,6 @@ final class PopulatePayoneExtension implements ExtensionInterface
      */
     public function onPreExecute(Context $context)
     {
-
     }
 
     /**

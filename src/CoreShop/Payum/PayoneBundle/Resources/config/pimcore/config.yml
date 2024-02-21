@@ -1,4 +1,4 @@
 core_shop_payment:
-    pimcore_admin:
-        js:
-            payone: /bundles/payone/pimcore/js/payone.js
+  pimcore_admin:
+    js:
+      payone: /bundles/payone/pimcore/js/payone.js

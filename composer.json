@@ -1,44 +1,50 @@
 {
-    "name": "coreshop/payum-payone-bundle",
-    "type": "pimcore-bundle",
-    "description": "CoreShop - Payone Bundle",
-    "keywords": [
-        "coreshop",
-        "pimcore",
-        "ecommerce",
-        "payone"
-    ],
-    "homepage": "http://www.coreshop.org",
-    "license": "GPL-3.0-or-later",
-    "authors": [
-        {
-            "name": "Dominik Pfaffenbauer",
-            "email": "dominik@pfaffenbauer.at",
-            "homepage": "https://www.pfaffenbauer.at/",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^7.0",
-        "coreshop/payum-payone": "~1.0.0",
-        "coreshop/payum-bundle": "^2.0"
-    },
-    "config": {
-        "bin-dir": "bin"
-    },
-    "autoload": {
-        "psr-4": {
-            "CoreShop\\Payum\\PayoneBundle\\": "src/CoreShop/Payum/PayoneBundle"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        },
-        "pimcore": {
-            "bundles": [
-                "CoreShop\\Payum\\PayoneBundle\\PayoneBundle"
-            ]
-        }
+  "name": "teamneusta/payum-payone-bundle",
+  "type": "pimcore-bundle",
+  "description": "Coreshop Payone Bundle forked from coreshop/payum-payone-bundle",
+  "keywords": [
+    "coreshop",
+    "pimcore",
+    "ecommerce",
+    "payone"
+  ],
+  "homepage": "http://www.coreshop.org",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Dominik Pfaffenbauer",
+      "email": "dominik@pfaffenbauer.at",
+      "homepage": "https://www.pfaffenbauer.at/",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": "^8.0",
+    "teamneusta/payum-payone": "@dev",
+    "coreshop/payum-bundle": "^3.0"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "CoreShop\\Payum\\PayoneBundle\\": "src/CoreShop/Payum/PayoneBundle"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    },
+    "pimcore": {
+      "bundles": [
+        "CoreShop\\Payum\\PayoneBundle\\PayoneBundle"
+      ]
+    }
+  },
+  "repositories": {
+    "teamneusta/payum-payone": {
+      "type": "vcs",
+      "url": "https://github.com/teamneusta/payum-payone"
+    }
+  }
 }

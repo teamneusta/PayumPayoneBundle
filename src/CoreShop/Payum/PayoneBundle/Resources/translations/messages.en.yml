@@ -1,0 +1,11 @@
+checkout:
+  payment:
+    creditCard:
+      headline: 'Credit card payment'
+      type: 'Card brand'
+      pan: 'Card number'
+      cvc: 'CVC'
+      expiredMonth: 'Month'
+      expiredYear: 'Year'
+      firstname: 'Firstname'
+      lastname: 'Lastname'
